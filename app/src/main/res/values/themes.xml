@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.USNewsApp.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/cornflowerblue</item>
+        <item name = "windowSplashScreenAnimatedIcon">@drawable/app_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.USNewsApp</item>
+    </style>
+
+    <style name="Theme.USNewsApp" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
