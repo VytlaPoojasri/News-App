@@ -1,4 +1,4 @@
-package com.deloitte.usnewsapp.data.model
+package com.deloitte.usnewsapp.data.news.model
 
 data class Article(
     val source: Source,

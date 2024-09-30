@@ -10,7 +10,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.deloitte.usnewsapp.data.local.entity.ArticleEntity
+import com.deloitte.usnewsapp.data.news.local.entity.ArticleEntity
 
 @Composable
 fun NewsListItem(article: ArticleEntity, onClick: () -> Unit) {

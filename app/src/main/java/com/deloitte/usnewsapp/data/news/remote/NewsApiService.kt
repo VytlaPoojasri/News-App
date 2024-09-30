@@ -1,6 +1,6 @@
-package com.deloitte.usnewsapp.data.remote
+package com.deloitte.usnewsapp.data.news.remote
 
-import com.deloitte.usnewsapp.data.model.NewsResponse
+import com.deloitte.usnewsapp.data.news.model.NewsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

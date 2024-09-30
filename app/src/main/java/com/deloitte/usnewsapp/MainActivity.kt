@@ -22,21 +22,23 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.deloitte.usnewsapp.data.remote.RetrofitInstance
+import com.deloitte.usnewsapp.data.news.remote.RetrofitInstance
 import com.deloitte.usnewsapp.viewmodel.NewsViewModel
 import com.deloitte.usnewsapp.viewmodel.NewsViewModelFactory
-import com.deloitte.usnewsapp.ui.screens.DetailedNewsScreen
-import com.deloitte.usnewsapp.ui.screens.NewsScreen
+import com.deloitte.usnewsapp.ui.screens.news.DetailedNewsScreen
+import com.deloitte.usnewsapp.ui.screens.news.NewsScreen
 import com.deloitte.usnewsapp.ui.theme.USNewsAppTheme
 import kotlinx.coroutines.launch
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.deloitte.usnewsapp.ui.navigation.AppNavHost
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            NewsApp()
+            val navController = rememberNavController()
+            AppNavHost(navController = navController, viewModel = viewModel())
         }
     }
 }

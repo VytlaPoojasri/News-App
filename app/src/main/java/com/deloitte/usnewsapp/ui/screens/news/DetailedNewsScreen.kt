@@ -1,4 +1,4 @@
-package com.deloitte.usnewsapp.ui.screens
+package com.deloitte.usnewsapp.ui.screens.news
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*

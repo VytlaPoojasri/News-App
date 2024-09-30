@@ -1,9 +1,9 @@
-package com.deloitte.usnewsapp.data.repository
+package com.deloitte.usnewsapp.data.news.repository
 
 import android.content.Context
-import com.deloitte.usnewsapp.data.local.db.AppDatabase
-import com.deloitte.usnewsapp.data.local.entity.ArticleEntity
-import com.deloitte.usnewsapp.data.remote.NewsApiService
+import com.deloitte.usnewsapp.data.news.local.db.AppDatabase
+import com.deloitte.usnewsapp.data.news.local.entity.ArticleEntity
+import com.deloitte.usnewsapp.data.news.remote.NewsApiService
 import com.deloitte.usnewsapp.util.NetworkUtils
 
 class NewsRepository(private val apiService: NewsApiService, private val context: Context) {

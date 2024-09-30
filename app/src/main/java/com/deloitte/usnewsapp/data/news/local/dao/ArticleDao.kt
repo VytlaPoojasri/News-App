@@ -1,10 +1,10 @@
-package com.deloitte.usnewsapp.data.local.dao
+package com.deloitte.usnewsapp.data.news.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.deloitte.usnewsapp.data.local.entity.ArticleEntity
+import com.deloitte.usnewsapp.data.news.local.entity.ArticleEntity
 
 @Dao
 interface ArticleDao {

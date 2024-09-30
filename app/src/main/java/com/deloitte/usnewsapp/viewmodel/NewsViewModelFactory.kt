@@ -3,8 +3,8 @@ package com.deloitte.usnewsapp.viewmodel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.deloitte.usnewsapp.data.remote.NewsApiService
-import com.deloitte.usnewsapp.data.repository.NewsRepository
+import com.deloitte.usnewsapp.data.news.remote.NewsApiService
+import com.deloitte.usnewsapp.data.news.repository.NewsRepository
 
 class NewsViewModelFactory(
     private val apiService: NewsApiService,

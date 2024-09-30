@@ -1,11 +1,11 @@
-package com.deloitte.usnewsapp.data.local.db
+package com.deloitte.usnewsapp.data.news.local.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.deloitte.usnewsapp.data.local.dao.ArticleDao
-import com.deloitte.usnewsapp.data.local.entity.ArticleEntity
+import com.deloitte.usnewsapp.data.news.local.dao.ArticleDao
+import com.deloitte.usnewsapp.data.news.local.entity.ArticleEntity
 
 @Database(entities = [ArticleEntity::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {

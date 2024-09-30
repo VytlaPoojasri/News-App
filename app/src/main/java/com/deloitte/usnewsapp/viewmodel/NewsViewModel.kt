@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.deloitte.usnewsapp.data.local.entity.ArticleEntity
-import com.deloitte.usnewsapp.data.repository.NewsRepository
+import com.deloitte.usnewsapp.data.news.local.entity.ArticleEntity
+import com.deloitte.usnewsapp.data.news.repository.NewsRepository
 import com.deloitte.usnewsapp.util.NetworkUtils
 import com.deloitte.usnewsapp.util.Resource
 import kotlinx.coroutines.flow.MutableStateFlow

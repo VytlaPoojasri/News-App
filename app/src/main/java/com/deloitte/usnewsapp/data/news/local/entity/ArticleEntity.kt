@@ -1,4 +1,4 @@
-package com.deloitte.usnewsapp.data.local.entity
+package com.deloitte.usnewsapp.data.news.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

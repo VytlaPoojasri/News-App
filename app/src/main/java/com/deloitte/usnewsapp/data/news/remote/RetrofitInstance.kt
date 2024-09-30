@@ -1,4 +1,4 @@
-package com.deloitte.usnewsapp.data.remote
+package com.deloitte.usnewsapp.data.news.remote
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
