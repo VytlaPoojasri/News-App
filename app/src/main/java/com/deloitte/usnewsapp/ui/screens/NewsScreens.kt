@@ -18,7 +18,6 @@ import com.deloitte.usnewsapp.ui.components.NewsListItem
 import com.deloitte.usnewsapp.util.Resource
 import com.deloitte.usnewsapp.viewmodel.NewsViewModel
 
-
 @Composable
 fun NewsScreen(navController: NavController, viewModel: NewsViewModel, category: String) {
     val newsState = viewModel.newsFlow.collectAsState()
@@ -48,12 +47,9 @@ fun NewsScreen(navController: NavController, viewModel: NewsViewModel, category:
                     }
                 }
             }
-
         }
         is Resource.Error -> {
             Text(text = "Error: ${state.message}")
         }
-
     }
 }
-

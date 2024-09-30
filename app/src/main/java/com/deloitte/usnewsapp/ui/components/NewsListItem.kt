@@ -10,11 +10,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.deloitte.usnewsapp.data.model.Article
-
+import com.deloitte.usnewsapp.data.local.entity.ArticleEntity
 
 @Composable
-fun NewsListItem(article: Article, onClick: () -> Unit) {
+fun NewsListItem(article: ArticleEntity, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -42,7 +41,7 @@ fun NewsListItem(article: Article, onClick: () -> Unit) {
                 modifier = Modifier.padding(bottom = 4.dp)
             )
             Text(
-                text = "Source: ${article.source.name}",
+                text = "Source: ${article.sourceName}",
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(bottom = 2.dp) // Space below source
             )

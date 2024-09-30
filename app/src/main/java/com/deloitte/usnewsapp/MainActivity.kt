@@ -13,7 +13,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,16 +23,14 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.deloitte.usnewsapp.data.remote.RetrofitInstance
-import com.deloitte.usnewsapp.data.repository.NewsRepository
-import com.deloitte.usnewsapp.ui.screens.DetailedNewsScreen
-import com.deloitte.usnewsapp.ui.theme.USNewsAppTheme
 import com.deloitte.usnewsapp.viewmodel.NewsViewModel
 import com.deloitte.usnewsapp.viewmodel.NewsViewModelFactory
+import com.deloitte.usnewsapp.ui.screens.DetailedNewsScreen
 import com.deloitte.usnewsapp.ui.screens.NewsScreen
+import com.deloitte.usnewsapp.ui.theme.USNewsAppTheme
 import kotlinx.coroutines.launch
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,12 +52,9 @@ fun NewsApp() {
         val customColor = Color(0xFF6495ED)
         var topBarTitle by remember { mutableStateOf("Top Headlines") }
 
-
-
         ModalNavigationDrawer(
             drawerState = drawerState,
             drawerContent = { DrawerContent(navController, { coroutineScope.launch { drawerState.close() } }) }
-
         ) {
             Scaffold(
                 topBar = {
@@ -69,14 +63,17 @@ fun NewsApp() {
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             color = Color.White) },
+
                         navigationIcon = {
                             IconButton(onClick = { coroutineScope.launch { drawerState.open() } }) {
-                                Icon(Icons.Default.Menu, contentDescription = "Open Drawer", tint = Color.White)
+                                Icon(Icons.Default.Menu,
+                                    contentDescription = "Open Drawer",
+                                    tint = Color.White)
                             }
                         },
                         colors = TopAppBarDefaults.topAppBarColors(
                             containerColor = customColor)
-                        )
+                    )
                 }
             ) { innerPadding ->
                 NavGraph(navController = navController,
@@ -87,7 +84,7 @@ fun NewsApp() {
                     onDetailedNewsSelected = { articleTitle ->
                         topBarTitle = articleTitle
                     }
-                    )
+                )
             }
         }
     }
@@ -130,24 +127,23 @@ fun NavGraph(navController: NavHostController,
              modifier: Modifier = Modifier,
              onCategorySelected: (String) -> Unit,
              onDetailedNewsSelected: (String) -> Unit) {
-    val viewModel: NewsViewModel = viewModel(factory = NewsViewModelFactory(NewsRepository(
-        RetrofitInstance.api)))
+    val context = navController.context
+    val viewModel: NewsViewModel = viewModel(factory = NewsViewModelFactory(RetrofitInstance.api, context))
 
     NavHost(navController = navController, startDestination = "news_screen/Top", Modifier.then(modifier)) {
         composable("news_screen/{category}") { backStackEntry ->
-            val category = backStackEntry.arguments?.getString("category") ?: "Top "
-            onCategorySelected(category) // Update the TopAppBar title
+            val category = backStackEntry.arguments?.getString("category") ?: "Top"
+            onCategorySelected(category) // Updates the TopAppBar title
             NewsScreen(navController = navController, viewModel = viewModel, category = category)
         }
         composable("detailed_news_screen/{articleUrl}") { backStackEntry ->
             val articleUrl = backStackEntry.arguments?.getString("articleUrl") ?: ""
             val article = viewModel.getArticleById(articleUrl)
-            onDetailedNewsSelected(article?.title ?: "Detailed News") // Update the TopAppBar title
+            onDetailedNewsSelected(article?.title ?: "Detailed News") // Updates the TopAppBar title
             DetailedNewsScreen(articleUrl, viewModel)
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

@@ -9,7 +9,6 @@ import androidx.activity.ComponentActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.deloitte.usnewsapp.MainActivity
 
-
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : ComponentActivity() {
 
@@ -20,12 +19,9 @@ class SplashActivity : ComponentActivity() {
 
         splashScreen.setKeepOnScreenCondition { true }
 
-         Handler(Looper.getMainLooper()).postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             startActivity(Intent(this, MainActivity::class.java))
-           finish()
-       }, 2000)
+            finish()
+        }, 2000)
     }
-
 }
-
-

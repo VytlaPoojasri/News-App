@@ -1,6 +1,5 @@
 package com.deloitte.usnewsapp.ui.screens
 
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -36,7 +35,7 @@ fun DetailedNewsScreen(articleUrl: String, viewModel: NewsViewModel) {
                 modifier = Modifier.padding(bottom = 8.dp) // Space below title
             )
             Text(
-                text = "Source: ${article.source.name}",
+                text = "Source: ${article.sourceName}",
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(bottom = 4.dp) // Space below source
             )
