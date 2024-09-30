@@ -9,14 +9,12 @@ import com.deloitte.usnewsapp.data.login.model.User
 import com.deloitte.usnewsapp.data.login.repository.UserRepository
 import kotlinx.coroutines.launch
 
-
 class AuthViewModel(application: Application) : AndroidViewModel(application) {
 
     private val userDao = LoginDatabase.getDatabase(application).userDao()
     private val userRepository = UserRepository(userDao)
     private val dataStoreManager = DataStoreManager(application)
 
-    //val isLoggedIn: LiveData<Boolean> = dataStoreManager.isLoggedIn.asLiveData()
     val username: LiveData<String> = dataStoreManager.username.asLiveData()
 
     fun login(email: String, password: String): LiveData<Boolean> = liveData {
@@ -40,7 +38,4 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-//    fun logout() = viewModelScope.launch {
-//        dataStoreManager.setLoggedIn(false)
-//    }
 }

@@ -1,10 +1,10 @@
 package com.deloitte.usnewsapp.ui.screens.login
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -72,9 +72,14 @@ fun LoginScreen(navController: NavController, viewModel: AuthViewModel) {
                     onClick = {
                         viewModel.login(email, password).observeForever { isLoggedIn ->
                             if (isLoggedIn) {
+                                Toast.makeText(
+                                    navController.context,
+                                    "Login successful",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                                 navController.navigate("home")
                             } else {
-                                errorMessage = "Invalid credentials"
+                                errorMessage = "Invalid Email or Password"
                             }
                         }
                     },

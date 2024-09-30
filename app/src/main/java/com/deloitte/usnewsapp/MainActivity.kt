@@ -33,6 +33,8 @@ import kotlinx.coroutines.launch
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.deloitte.usnewsapp.ui.navigation.AppNavHost
+import com.deloitte.usnewsapp.ui.screens.login.LoginScreen
+import com.deloitte.usnewsapp.ui.screens.login.SignupScreen
 import com.deloitte.usnewsapp.viewmodel.AuthViewModel
 
 class MainActivity : ComponentActivity() {
@@ -40,15 +42,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
-            AppNavHost(navController = navController, viewModel = viewModel())
+            val authViewModel: AuthViewModel = viewModel()
+            AppNavHost(navController = navController, viewModel = authViewModel)
         }
     }
 }
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun NewsApp() {
+fun NewsApp(viewModel: AuthViewModel) {
     USNewsAppTheme {
         val navController = rememberNavController()
         val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -58,7 +62,7 @@ fun NewsApp() {
 
         ModalNavigationDrawer(
             drawerState = drawerState,
-            drawerContent = { DrawerContent(navController, { coroutineScope.launch { drawerState.close() } }) }
+            drawerContent = { DrawerContent(navController, { coroutineScope.launch { drawerState.close() } }, viewModel) }
         ) {
             Scaffold(
                 topBar = {
@@ -94,19 +98,21 @@ fun NewsApp() {
     }
 }
 
-@Composable
-fun DrawerContent(navController: NavController, onClose: () -> Unit) {
 
+@Composable
+fun DrawerContent(navController: NavController, onClose: () -> Unit, viewModel: AuthViewModel) {
     val categories = listOf("Business", "Entertainment", "Health", "Science", "Sports", "Technology")
     val customColor = Color(0xFF6495ED)
+    val username by viewModel.username.observeAsState("")
 
     Box(modifier = Modifier
         .fillMaxHeight()
         .width(250.dp)
-        .background(customColor) ) {
+        .background(customColor)) {
 
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = "Categories",style = MaterialTheme.typography.titleLarge, color = Color.White, fontWeight = FontWeight.Bold)
+
+            Text(text = "News Categories", style = MaterialTheme.typography.titleLarge, color = Color.White, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(16.dp))
 
             categories.forEach { category ->
@@ -123,9 +129,15 @@ fun DrawerContent(navController: NavController, onClose: () -> Unit) {
                         .padding(8.dp)
                 )
             }
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Text(text = "Logged in as: \n $username", style = MaterialTheme.typography.titleLarge, color = Color.White, fontWeight = FontWeight.Bold)
+
         }
     }
 }
+
 
 @Composable
 fun NavGraph(navController: NavHostController,
@@ -136,6 +148,8 @@ fun NavGraph(navController: NavHostController,
     val viewModel: NewsViewModel = viewModel(factory = NewsViewModelFactory(RetrofitInstance.api, context))
 
     NavHost(navController = navController, startDestination = "news_screen/Top", Modifier.then(modifier)) {
+        composable("login") { LoginScreen(navController, viewModel = viewModel()) }
+        composable("signup") { SignupScreen(navController, viewModel = viewModel()) }
         composable("news_screen/{category}") { backStackEntry ->
             val category = backStackEntry.arguments?.getString("category") ?: "Top"
             onCategorySelected(category) // Updates the TopAppBar title
@@ -148,10 +162,4 @@ fun NavGraph(navController: NavHostController,
             DetailedNewsScreen(articleUrl, viewModel)
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    NewsApp()
 }

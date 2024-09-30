@@ -14,6 +14,6 @@ fun AppNavHost(navController: NavHostController, viewModel: AuthViewModel) {
     NavHost(navController = navController, startDestination = "login") {
         composable("login") { LoginScreen(navController, viewModel) }
         composable("signup") { SignupScreen(navController, viewModel) }
-        composable("home") { NewsApp() }
+        composable("home") { NewsApp(viewModel) }
     }
 }
