@@ -2,9 +2,15 @@ package com.deloitte.usnewsapp.ui.screens.login
 
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -12,7 +18,11 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.deloitte.usnewsapp.viewmodel.AuthViewModel
-
 
 @Composable
 fun SignupScreen(navController: NavController, viewModel: AuthViewModel) {
@@ -34,6 +43,12 @@ fun SignupScreen(navController: NavController, viewModel: AuthViewModel) {
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
+
+    // Function to validate email format
+    fun isEmailValid(email: String): Boolean {
+        val emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$".toRegex()
+        return emailRegex.matches(email)
+    }
 
     Box(
         modifier = Modifier
@@ -84,21 +99,27 @@ fun SignupScreen(navController: NavController, viewModel: AuthViewModel) {
                     visualTransformation = PasswordVisualTransformation()
                 )
                 Button(onClick = {
-                    if (password == confirmPassword) {
-                        viewModel.signup(username, email, password).observeForever { isSignedUp ->
-                            if (isSignedUp) {
-                                Toast.makeText(
-                                    navController.context,
-                                    "Signup successful",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                navController.navigate("login")
-                            } else {
-                                errorMessage = "Email already exists"
+                    when {
+                        !isEmailValid(email) -> {
+                            errorMessage = "Invalid email format"
+                        }
+                        password != confirmPassword -> {
+                            errorMessage = "Passwords do not match"
+                        }
+                        else -> {
+                            viewModel.signup(username, email, password).observeForever { isSignedUp ->
+                                if (isSignedUp) {
+                                    Toast.makeText(
+                                        navController.context,
+                                        "Signup successful",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    navController.navigate("login")
+                                } else {
+                                    errorMessage = "Email already exists"
+                                }
                             }
                         }
-                    } else {
-                        errorMessage = "Passwords do not match"
                     }
                 },
                     modifier = Modifier.fillMaxWidth(),
@@ -106,7 +127,7 @@ fun SignupScreen(navController: NavController, viewModel: AuthViewModel) {
                     Text("Sign Up")
                 }
                 TextButton(onClick = { navController.navigate("login") }) {
-                    Text("Already have an account? Login",color = customColor, fontSize = 16.sp)
+                    Text("Already have an account? Login", color = customColor, fontSize = 16.sp)
                 }
                 if (errorMessage.isNotEmpty()) {
                     Text(errorMessage, color = Color.Red)

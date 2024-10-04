@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -51,7 +51,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -76,35 +75,36 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-
-    implementation("androidx.compose.ui:ui:1.6.0")  // Updated
-    implementation("androidx.compose.ui:ui-tooling-preview:1.6.0")  // Updated
-    implementation("androidx.compose.material3:material3:1.2.0")  // Updated
-    implementation("androidx.compose.ui:ui-tooling:1.6.0")
+    implementation("androidx.compose.ui:ui:1.7.3")  // Updated
+    implementation("androidx.compose.ui:ui-tooling-preview:1.7.3")  // Updated
+    implementation("androidx.compose.material3:material3:1.3.0")  // Updated
+    implementation("androidx.compose.ui:ui-tooling:1.7.3")
 
     // ViewModel for Compose
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1") // Updated
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6") // Updated
 
     // Retrofit & GSON
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.google.code.gson:gson:2.8.6")
+    implementation("com.google.code.gson:gson:2.11.0")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1") // Updated
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1") // Updated
 
     // Coil for image loading
-    implementation("io.coil-kt:coil-compose:2.1.0")
+    implementation("io.coil-kt:coil-compose:2.7.0")
 
-    // splash screen
+    // Splash screen
     implementation("androidx.core:core-splashscreen:1.0.1")
 
-    //roomdb
+    // Room Database
     implementation("androidx.room:room-runtime:2.6.1")
-    kapt("androidx.room:room-compiler:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
 
-    // preference datastore
+    // Preference DataStore
     implementation("androidx.datastore:datastore-preferences:1.1.1")
 
+    // WebView
+    implementation("androidx.webkit:webkit:1.12.1")
 }

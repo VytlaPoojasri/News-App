@@ -35,6 +35,7 @@ import androidx.navigation.compose.composable
 import com.deloitte.usnewsapp.ui.navigation.AppNavHost
 import com.deloitte.usnewsapp.ui.screens.login.LoginScreen
 import com.deloitte.usnewsapp.ui.screens.login.SignupScreen
+import com.deloitte.usnewsapp.ui.screens.news.WebViewScreen
 import com.deloitte.usnewsapp.viewmodel.AuthViewModel
 
 class MainActivity : ComponentActivity() {
@@ -134,10 +135,10 @@ fun DrawerContent(navController: NavController, onClose: () -> Unit, viewModel: 
 
             Text(text = "Logged in as: \n $username", style = MaterialTheme.typography.titleLarge, color = Color.White, fontWeight = FontWeight.Bold)
 
+
         }
     }
 }
-
 
 @Composable
 fun NavGraph(navController: NavHostController,
@@ -148,8 +149,6 @@ fun NavGraph(navController: NavHostController,
     val viewModel: NewsViewModel = viewModel(factory = NewsViewModelFactory(RetrofitInstance.api, context))
 
     NavHost(navController = navController, startDestination = "news_screen/Top", Modifier.then(modifier)) {
-        composable("login") { LoginScreen(navController, viewModel = viewModel()) }
-        composable("signup") { SignupScreen(navController, viewModel = viewModel()) }
         composable("news_screen/{category}") { backStackEntry ->
             val category = backStackEntry.arguments?.getString("category") ?: "Top"
             onCategorySelected(category) // Updates the TopAppBar title
@@ -159,7 +158,12 @@ fun NavGraph(navController: NavHostController,
             val articleUrl = backStackEntry.arguments?.getString("articleUrl") ?: ""
             val article = viewModel.getArticleById(articleUrl)
             onDetailedNewsSelected(article?.title ?: "Detailed News") // Updates the TopAppBar title
-            DetailedNewsScreen(articleUrl, viewModel)
+            DetailedNewsScreen(articleUrl, viewModel, navController)
+        }
+        composable("webview_screen/{url}") { backStackEntry ->
+            val url = backStackEntry.arguments?.getString("url") ?: ""
+            WebViewScreen(url)
         }
     }
 }
+

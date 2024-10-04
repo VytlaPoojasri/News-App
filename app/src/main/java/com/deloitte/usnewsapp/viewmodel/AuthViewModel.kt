@@ -1,8 +1,8 @@
 package com.deloitte.usnewsapp.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
-import androidx.lifecycle.viewModelScope
 import com.deloitte.usnewsapp.data.login.database.LoginDatabase
 import com.deloitte.usnewsapp.data.login.datastore.DataStoreManager
 import com.deloitte.usnewsapp.data.login.model.User
@@ -37,5 +37,4 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
             emit(false)
         }
     }
-
 }

@@ -1,18 +1,27 @@
 package com.deloitte.usnewsapp.ui.screens.news
 
+
+import android.net.Uri
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.deloitte.usnewsapp.viewmodel.NewsViewModel
 
 @Composable
-fun DetailedNewsScreen(articleUrl: String, viewModel: NewsViewModel) {
+fun DetailedNewsScreen(articleUrl: String, viewModel: NewsViewModel,navController: NavController) {
     val article = viewModel.getArticleById(articleUrl)
+    val customColor = Color(0xFF6495ED)
+
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -59,6 +68,16 @@ fun DetailedNewsScreen(articleUrl: String, viewModel: NewsViewModel) {
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
+            Button(
+                onClick = {
+                    val encodedUrl = Uri.encode(article.url)
+                    navController.navigate("webview_screen/$encodedUrl")
+                }, modifier = Modifier.padding(top = 16.dp),
+
+            ) {
+                Text(text = "See More")
+            }
+
         } else {
             Text(text = "Article not found.", style = MaterialTheme.typography.bodyLarge)
         }
